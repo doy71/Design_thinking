@@ -1,18 +1,18 @@
-import React, { useState, useCallback, useEffect } from 'react';
+// CardPage.js
+import React, { useContext, useEffect } from 'react';
 import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
-import { useFocusEffect } from '@react-navigation/native';
-// import styles from './styles';
+import { CartContext } from '../context/CartContext';
 
-const CardPage = ({ route, navigation }) => {
+const CardPage = ({ navigation }) => {
+  const { cart } = useContext(CartContext);
+
   useEffect(() => {
-        const timer = setTimeout(() => {
-          navigation.navigate('MovePage'); 
-        }, 3000);
-    
-        return () => clearTimeout(timer); 
-      }, [navigation]);
+    const timer = setTimeout(() => {
+      navigation.navigate('MovePage'); 
+    }, 3000);
 
-  const { cart } = route.params;
+    return () => clearTimeout(timer);
+  }, [navigation]);
 
   const calculateTotal = () => {
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -75,6 +75,16 @@ const styles = StyleSheet.create({
   instruction: {
     fontSize: 16,
     marginBottom: 20,
+  },
+  button: {
+    padding: 10,
+    backgroundColor: '#007BFF',
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });
 
