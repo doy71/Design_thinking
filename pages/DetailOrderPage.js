@@ -2,7 +2,7 @@
 import React, { useState, useContext } from 'react';
 import { View, Text, Image, TouchableOpacity } from 'react-native';
 import styles from './styles';
-import { CartContext } from '../context/CartContext';
+import { CartContext } from '../context/CartContext'; //수정
 
 const DetailOrderPage = ({ navigation, route }) => {
   const { cart, setCart } = useContext(CartContext);
@@ -40,13 +40,13 @@ const DetailOrderPage = ({ navigation, route }) => {
               style={[styles.temperatureButton, temperature === '차갑게' && styles.selectedButton]}
               onPress={() => setTemperature('차갑게')}
             >
-              <Text>차갑게</Text>
+              <Text style={[styles.temperatureButtonText, temperature === '차갑게' && styles.selectedButtonText]}>❄️차갑게</Text>
             </TouchableOpacity>
             <TouchableOpacity
               style={[styles.temperatureButton, temperature === '따듯하게' && styles.selectedButtonHot]}
               onPress={() => setTemperature('따듯하게')}
             >
-              <Text>따듯하게</Text>
+              <Text style={[styles.temperatureButtonText, temperature === '따듯하게' && styles.selectedButtonText]}>♨️따듯하게</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -63,10 +63,10 @@ const DetailOrderPage = ({ navigation, route }) => {
         <Text>가격 : {item.price * quantity} 원</Text>
         <View style={styles.orderButtonGroup}>
           <TouchableOpacity style={styles.orderLargeButton} onPress={addToCartAndGoToCartPage}>
-            <Text style={styles.buttonText}>결제하기</Text>
+            <Text style={styles.buttonText}>📋결제하기</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.orderLargeButton} onPress={addToCart}>
-            <Text style={styles.buttonText}>주문 담기</Text>
+            <Text style={styles.buttonText}>🛒주문 담기</Text>
           </TouchableOpacity>
         </View>
       </View>

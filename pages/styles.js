@@ -2,6 +2,7 @@
 import { StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
+  // 기존 스타일 정의
   container: {
     flex: 1,
     flexDirection: 'row',
@@ -117,11 +118,13 @@ const styles = StyleSheet.create({
   selectedButton: {
     backgroundColor: '#007BFF',
   },
+  selectedButtonText: {
+    color: '#fff',
+  },
   quantityContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '25%',
   },
   quantityButton: {
     padding: 10,
@@ -139,9 +142,11 @@ const styles = StyleSheet.create({
   },
   cartItem: {
     flexDirection: 'row',
+    alignItems: 'center', // 세로 기준 가운데 정렬
     justifyContent: 'space-between',
     marginBottom: 10,
-    padding: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 5, // 좌우 여백을 줄이기
     backgroundColor: '#fff',
     borderRadius: 5,
     shadowColor: '#000',
@@ -152,7 +157,11 @@ const styles = StyleSheet.create({
   },
   cartText: {
     fontSize: 16,
-    width: '20%',
+    textAlign: 'center',
+  },
+  cartNameText: {
+    flex: 2, // 메뉴명 칸의 flex 조정
+    fontSize: 16,
     textAlign: 'center',
   },
   totalPrice: {
@@ -199,10 +208,10 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: '#ff4d4d',
     borderRadius: 5,
-    marginHorizontal: 5,
+    marginLeft: 5, // 오른쪽 끝에 붙이기 위해 marginLeft로 조정
   },
   sideButton2: {
-    width: '18%',
+    width: '20%',
     paddingVertical: 20,
     backgroundColor: '#bbb',
     borderRadius: 5,
@@ -212,6 +221,33 @@ const styles = StyleSheet.create({
   selectedButtonHot: {
     backgroundColor: '#FF0000',
   },
+  indexText: {
+    width: 30,
+    fontSize: 16,
+    textAlign: 'center',
+    marginRight: 5, // 왼쪽 끝에 붙이기 위해 marginRight로 조정
+  },
+  orderTypeText: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  temperatureButtonText: {
+    color: '#000', // 기본 텍스트 색상
+  },
+  audioPlayerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    width: '100%',
+    padding: 10,
+    backgroundColor: '#f5f5f5',
+  },
+  slider: {
+    width: 200,
+    height: 40,
+  }
 });
 
 export default styles;

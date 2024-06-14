@@ -1,34 +1,26 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { StyleSheet, Text, Button, TouchableOpacity, Alert, View, Image, StatusBar } from 'react-native';
 import 임영웅1 from "../assets/임영웅1.jpg";
-import audio from "../assets/audio.jpg";
-import { useNavigation } from '@react-navigation/native';
-import { Audio } from 'expo-av';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import AudioPlayer from './AudioPlayer';
 
+export default function MainPage() {
+  const navigation = useNavigation();
+  let soundRef = null; 
 
-
-export default function MainPage() { //어차피 mainpage는 나중에 페이지이동 버튼 지워야돼서 제일 마지막에 다른페이지 다 만들고 수정할예정.
-  const navigation = useNavigation(); 
-  const sound = React.useRef(new Audio.Sound());
-
-  const playSound = async () => {
-    try {
-      await sound.current.unloadAsync(); // 기존에 로드된 사운드 정리
-      await sound.current.loadAsync(require('../assets/sound.mp3')); // 로컬 음성 파일 로드
-      await sound.current.playAsync(); // 사운드 재생
-    } catch (error) {
-      console.log('Error loading or playing sound:', error);
-    }
-  };
-
-  React.useEffect(() => {
-    return sound.current
-      ? () => {
-          sound.current.unloadAsync(); // 컴포넌트 언마운트 시 사운드 정리
+  useFocusEffect( 
+    useCallback(() => {
+      return () => {
+        if (soundRef) {
+          soundRef.stopAsync();
         }
-      : undefined;
-  }, []);
-  
+      };
+    }, [])
+  );
+  const handleSoundRef = (sound) => {  // 추가
+    soundRef = sound;  // 추가
+  };  // 추가
+
   return (
     <View style={styles.container}>
       <View style={styles.balloon}>
@@ -40,21 +32,17 @@ export default function MainPage() { //어차피 mainpage는 나중에 페이지
       </View>
 
       <View style={styles.buttonContainer}>
-        {/* <TouchableOpacity style={styles.button}>
-          <Text style={styles.text}>기존방식</Text>
-        </TouchableOpacity> */}
-        <TouchableOpacity style={styles.button} onPress={()=>{navigation.navigate('GuidePage')}}>
+        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('GuidePage')}>
           <Text style={styles.text}>안내방식</Text>
         </TouchableOpacity>
       </View>
 
-      <Image source={임영웅1}
-      style={styles.imageStyle}
-      />
-      <TouchableOpacity accessibilityLabel="Play Sound" onPress={playSound}>
-          <Image source={audio} style={styles.image}/>
-        </TouchableOpacity>
-    </View>)};
+      <Image source={임영웅1} style={styles.imageStyle} />
+      
+      <AudioPlayer source={require('../assets/sounds/guidepage.mp3')} onSoundRef={handleSoundRef} />
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -110,6 +98,30 @@ const styles = StyleSheet.create({
     width:400,
     height:50,
     resizeMode:'contain'
+  },
+  audioPlayerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    width: '100%',
+    padding: 10,
+    backgroundColor: '#f5f5f5',
+  },
+  slider: {
+    width: 200,
+    height: 40,
+  },
+  audioPlayerContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    width: '100%',
+    padding: 10,
+    backgroundColor: '#f5f5f5',
+  },
+  slider: {
+    width: 200,
+    height: 40,
   }
 });
 

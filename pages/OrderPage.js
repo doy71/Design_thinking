@@ -1,5 +1,5 @@
 // OrderPage.js
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
 import { CartContext } from '../context/CartContext';
@@ -29,9 +29,16 @@ const items = [
   },
 ];
 
-const OrderPage = ({ navigation }) => {
+const OrderPage = ({ navigation, route }) => {
   const { cart, setCart } = useContext(CartContext);
   const [selectedCategory, setSelectedCategory] = useState('음료');
+  const [orderType, setOrderType] = useState('');
+
+  useEffect(() => {
+    if (route.params?.orderType) {
+      setOrderType(route.params.orderType);
+    }
+  }, [route.params?.orderType]);
 
   const categories = items.map(item => item.category);
 
@@ -55,6 +62,7 @@ const OrderPage = ({ navigation }) => {
         ))}
       </View>
       <View style={styles.mainContent}>
+        <Text style={styles.orderTypeText}>{orderType}</Text>
         <ScrollView style={styles.itemScroll}>
           {items
             .filter(category => category.category === selectedCategory)

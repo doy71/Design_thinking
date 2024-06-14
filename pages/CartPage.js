@@ -55,25 +55,25 @@ const CartPage = ({ navigation }) => {
       <View style={styles.cartList}>
         {mergedCart.map((item, index) => (
           <View key={index} style={styles.cartItem}>
-            <Text style={styles.cartText}>{index + 1}</Text>
-            <Text style={styles.cartText}>{item.name}</Text>
+            <Text style={styles.indexText}>{index + 1}</Text>
+            <Text style={styles.cartNameText}>{item.name}</Text>
             <View style={styles.quantityContainer}>
               <TouchableOpacity onPress={() => decreaseQuantity(index)} style={styles.quantityButton}>
                 <Text style={styles.buttonText}>-</Text>
               </TouchableOpacity>
-              <Text style={styles.cartText}>{item.quantity} 개</Text>
+              <Text style={styles.cartText}>{item.quantity}개</Text>
               <TouchableOpacity onPress={() => increaseQuantity(index)} style={styles.quantityButton}>
                 <Text style={styles.buttonText}>+</Text>
               </TouchableOpacity>
             </View>
-            <Text style={styles.cartText}>{item.price * item.quantity} 원</Text>
+            <Text style={styles.cartText}>{item.price * item.quantity}원</Text>
             <TouchableOpacity onPress={() => removeItem(index)} style={styles.removeButton}>
               <Text style={styles.buttonText}>삭제</Text>
             </TouchableOpacity>
           </View>
         ))}
       </View>
-      <Text style={styles.totalPrice}>총 금액: {totalPrice} 원</Text>
+      <Text style={styles.totalPrice}>총 금액: {totalPrice}원</Text>
       <Text>담아주신 목록은 다음과 같아요. 결제를 원하시면 결제하기를 눌러주세요.</Text>
       <View style={styles.cartButtonGroup}>
         <TouchableOpacity style={styles.cartLargeButton} onPress={() => navigation.navigate('OrderPage')}>

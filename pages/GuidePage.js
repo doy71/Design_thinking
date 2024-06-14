@@ -1,11 +1,24 @@
-import React, { useRef } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image, Animated } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import audio from "../assets/audio.jpg";
+import React, { useCallback } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import AudioPlayer from './AudioPlayer';
 
-//조익준
-export default  GuidePage = () => {
+const GuidePage = () => {
   const navigation = useNavigation();
+  let soundRef = null;  
+
+  useFocusEffect(  
+    useCallback(() => {  
+      return () => {  
+        if (soundRef) {  
+          soundRef.stopAsync();  
+        }  
+      };  
+    }, [])  
+  );  
+  const handleSoundRef = (sound) => {
+    soundRef = sound;
+  }; 
   return (
     <View style={styles.container}>
       <View style={styles.top}>
@@ -18,130 +31,124 @@ export default  GuidePage = () => {
         <TouchableOpacity style={styles.callbutton}>
             <Text style={styles.callstaff}>직원 호출</Text>
         </TouchableOpacity>
-        
       </View>
-  
+
       <View style={styles.middle}>
         <View style={styles.middletext}>
-          <Text style={styles.guidetext}>매장 이용을 원하시는  </Text>
-          <Text style={styles.guidetext}>고객님은 '매장 이용'을 </Text>
-          <Text style={styles.guidetext}>포장 주문을 원하시는 </Text>
+          <Text style={styles.guidetext}>매장 이용을 원하시는</Text>
+          <Text style={styles.guidetext}>고객님은 '매장 이용'을</Text>
+          <Text style={styles.guidetext}>포장 주문을 원하시는</Text>
           <Text style={styles.guidetext}>고객님은 '포장 주문'을 눌러주세요</Text>
         </View>
-       
+
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('OrderPage')}>
+          <TouchableOpacity 
+            style={styles.button} 
+            onPress={() => navigation.navigate('OrderPage', { orderType: '매장 이용입니다.' })}
+          >
               <Text style={styles.text}>매장 이용</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('OrderPage')}>
+          <TouchableOpacity 
+            style={styles.button} 
+            onPress={() => navigation.navigate('OrderPage', { orderType: '포장 주문입니다.' })}
+          >
               <Text style={styles.text}>포장 주문</Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      <View style={styles.bottom}>
-        <TouchableOpacity>
-          <Image source={audio} style={styles.image}/>
-        </TouchableOpacity>
-      </View>
-
+      <AudioPlayer source={require('../assets/sounds/guidepage.mp3')} onSoundRef={handleSoundRef} /> 
     </View>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    
   },
-  top:{
-    flex:0.1 ,
+  top: {
+    flex: 0.1,
     flexDirection: 'row',
-
   },
-  backbutton:{
+  backbutton: {
     backgroundColor: '#007BFF',
     borderRadius: 5,
     marginTop: 20,
     marginRight: 10,
-    justifyContent:'center',
+    justifyContent: 'center',
     width: 65,
     height: 40,
   },
-  orderStage:{
-    fontWeight: 'bold', 
+  orderStage: {
+    fontWeight: 'bold',
     fontSize: 35,
-    marginTop:10,
+    marginTop: 10,
   },
-  callbutton :{
+  callbutton: {
     backgroundColor: '#007BFF',
     borderRadius: 5,
     marginTop: 20,
     marginLeft: 10,
-    justifyContent:'center',
+    justifyContent: 'center',
     width: 65,
     height: 40,
   },
-  callstaff:{
+  callstaff: {
     textAlign: 'center',
-    fontWeight:'bold',
+    fontWeight: 'bold',
     color: '#fff',
-    
   },
-  middle:{
-    flex:0.8,
+  middle: {
+    flex: 0.8,
   },
-  middletext:{
+  middletext: {
     backgroundColor: '#007BFF',
-    padding:30,
+    padding: 30,
     paddingVertical: 40,
     paddingHorizontal: 30,
     borderRadius: 10,
-    marginTop:50,
-    marginLeft:20,
-    marginRight:20,
-    marginBottom:20,
+    marginTop: 50,
+    marginLeft: 20,
+    marginRight: 20,
+    marginBottom: 20,
   },
-  guidetext:{
+  guidetext: {
     fontSize: 27,
     fontWeight: 'bold',
     textAlign: 'center',
     color: '#fff',
-    marginBottom:10
+    marginBottom: 10,
   },
-  buttonContainer:{
+  buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
-  button:{
+  button: {
     backgroundColor: '#007BFF',
     borderRadius: 5,
-    // paddingVertical: 10,
-    // paddingHorizontal: 10,
-    // margin: 20,
     padding: 20,
     alignItems: 'center',
     marginHorizontal: 5,
   },
-  text:{
-    textAlign:'center',
+  text: {
+    textAlign: 'center',
     fontSize: 16,
     fontWeight: 'bold',
     color: '#fff',
   },
-  bottom:{
-    flex:0.1,
+  bottom: {
+    flex: 0.1,
     justifyContent: 'flex-end',
     alignItems: 'flex-end',
   },
   image: {
-    width:400,
-    height:50,
-    resizeMode:'contain'
-  }
-
+    width: 400,
+    height: 50,
+    resizeMode: 'contain',
+  },
 });
+
+export default GuidePage;

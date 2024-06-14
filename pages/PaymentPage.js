@@ -1,14 +1,26 @@
-// PaymentPage.js
-import React, { useContext } from 'react';
-import { StyleSheet, View, Text, TouchableOpacity, Image } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useCallback, useContext } from 'react';
+import { StyleSheet, View, Text, TouchableOpacity } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { CartContext } from '../context/CartContext';
-import audio from "../assets/audio.jpg";
+import AudioPlayer from './AudioPlayer';
 
 const PaymentPage = () => {
     const navigation = useNavigation();
     const { cart } = useContext(CartContext);
+    let soundRef = null;  
 
+  useFocusEffect(  
+    useCallback(() => {  
+      return () => {  
+        if (soundRef) {  
+          soundRef.stopAsync();  
+        }  
+      };  
+    }, [])  
+  );  
+  const handleSoundRef = (sound) => {
+    soundRef = sound;
+  }; 
     return (
         <View style={styles.container}>
             <View style={styles.top}>
@@ -45,11 +57,7 @@ const PaymentPage = () => {
                 </View>
             </View>
 
-            <View style={styles.bottom}>
-                <TouchableOpacity>
-                    <Image source={audio} style={styles.image} />
-                </TouchableOpacity>
-            </View>
+            <AudioPlayer source={require('../assets/sounds/paymentpage.mp3')} onSoundRef={handleSoundRef} />
         </View>
     );
 }

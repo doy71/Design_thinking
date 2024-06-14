@@ -1,11 +1,24 @@
-import React, {useEffect} from 'react';
-import { StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import React, { useEffect, useCallback } from 'react';
+import { StyleSheet, View, Text, Image } from 'react-native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import 임영웅1 from "../assets/임영웅1.jpg";
-import audio from "../assets/audio.jpg";
+import AudioPlayer from './AudioPlayer';
 
-export default  CompletePaymentPage = ({ navigation }) => {
+const CompletePaymentPage = ({ navigation }) => {
+  let soundRef = null;  
 
+  useFocusEffect(  
+    useCallback(() => {  
+      return () => {  
+        if (soundRef) {  
+          soundRef.stopAsync();  
+        }  
+      };  
+    }, [])  
+  );  
+  const handleSoundRef = (sound) => {
+    soundRef = sound;
+  }; 
   useEffect(() => {
     const timer = setTimeout(() => {
       navigation.navigate('MainPage'); 
@@ -13,7 +26,7 @@ export default  CompletePaymentPage = ({ navigation }) => {
 
     return () => clearTimeout(timer); 
   }, [navigation]);
-    
+
   return (
     <View style={styles.container}>
       <View style={styles.messageBox}>
@@ -23,12 +36,11 @@ export default  CompletePaymentPage = ({ navigation }) => {
         <Text style={styles.messageText}>감사합니다.</Text>
       </View>
 
-      <Image style={styles.image} source={임영웅1}/>
+      <Image style={styles.image} source={임영웅1} />
 
-
-      <TouchableOpacity> 
-        <Image source={audio} style={styles.audioImage}/> 
-      </TouchableOpacity>
+      <View style={styles.audioPlayerWrapper}>
+        <AudioPlayer source={require('../assets/sounds/CompletePaymentPage.mp3')} onSoundRef={handleSoundRef} />
+      </View>
     </View>
   );
 }
@@ -36,6 +48,7 @@ export default  CompletePaymentPage = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#fff',
   },
@@ -58,14 +71,19 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    marginVertical:39,
+    marginVertical: 20,
     width: 200,
     height: 250,
     resizeMode: 'contain',
   },
-  audioImage: {
-    width: 400,
-    height: 50,
-    resizeMode: 'contain',
+  audioPlayerWrapper: {
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    backgroundColor: '#f5f5f5',
+    position: 'absolute',
+    bottom: 0,
   },
 });
+
+export default CompletePaymentPage;
