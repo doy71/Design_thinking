@@ -8,6 +8,7 @@ const DetailOrderPage = ({ navigation, route }) => {
   const { item } = route.params;
   const [quantity, setQuantity] = useState(1);
   const [temperature, setTemperature] = useState('따듯하게');
+  const [showMessage, setShowMessage] = useState(false);
 
   const addToCart = () => {
     setCart([...cart, { ...item, quantity, temperature }]);
@@ -37,7 +38,12 @@ const DetailOrderPage = ({ navigation, route }) => {
       >
         <Text style={styles.backButtonTextDetail}>뒤로</Text>
       </TouchableOpacity>
-        <TouchableOpacity style={styles.callbuttonOrder} onPress={() => navigation.navigate('EmployeeCalledPage')}>
+      {showMessage && (
+          <View style={styles.messageContainer}>
+            <Text style={styles.messageText}>직원이 오는 중입니다. 잠시만 기다려주세요</Text>
+          </View>
+        )}
+        <TouchableOpacity style={styles.callbuttonOrder} onPress={handleCallStaff}>
           <Text style={styles.callstaffDetail}>직원 호출</Text>
         </TouchableOpacity>
       <Image source={item.image} style={styles.largeImageDetail} />

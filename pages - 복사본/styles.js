@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   orderTypeText: {
     fontSize: 25,
     fontWeight: 'bold',
-    marginLeft: 25,
+    textAlign: 'center',
     marginBottom: 10,
   },
   temperatureButtonText: {
@@ -379,8 +379,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   largeImageDetail: {
-    width: 200,
-    height: 200,
+    width: 250,
+    height: 250,
     alignSelf: 'center',
     marginBottom: 10,
     borderRadius: 10,

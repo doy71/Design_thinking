@@ -5,10 +5,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import StackNavigator from './navigation/StackNavigator';
 import { CartProvider } from './context/CartContext';
 
-LogBox.ignoreAllLogs();
-
 export default function App() {
   console.disableYellowBox = true;
+  LogBox.ignoreLogs(['Warning: ...']);
 
   return (
     <CartProvider>

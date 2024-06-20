@@ -3,7 +3,6 @@ import { View, Text, Image, TouchableOpacity, ScrollView } from 'react-native';
 import styles from './styles';
 import { CartContext } from '../context/CartContext';
 import { useFocusEffect } from '@react-navigation/native';
-import EmployeeCalledPage from '../pages/EmployeeCalledPage';
 
 const items = [
   {
@@ -113,7 +112,12 @@ const OrderPage = ({ navigation, route }) => {
             <Text style={styles.textDetail}>📋결제 하기</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.callbuttonOrder} onPress={() => navigation.navigate('EmployeeCalledPage')}>
+        {showMessage && (
+          <View style={styles.messageContainer}>
+            <Text style={styles.messageText}>직원이 오는 중입니다. 잠시만 기다려주세요</Text>
+          </View>
+        )}
+        <TouchableOpacity style={styles.callbuttonOrder} onPress={handleCallStaff}>
           <Text style={styles.callstaffDetail}>직원 호출</Text>
         </TouchableOpacity>
       </View>

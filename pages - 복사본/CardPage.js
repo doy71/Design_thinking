@@ -65,8 +65,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title: {
-    fontSize: 40,
-    fontWeight:'bold',
+    fontSize: 24,
     marginBottom: 10,
   },
   scrollContainer: {
@@ -91,8 +90,7 @@ const styles = StyleSheet.create({
     fontSize: 18, // 글씨 크기를 키움
   },
   total: {
-    fontSize: 40,
-    fontWeight: 'bold',
+    fontSize: 20,
     marginBottom: 20,
   },
   button: {
@@ -102,7 +100,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: '#fff',
-    fontSize: 30,
+    fontSize: 16,
     fontWeight: 'bold',
   },
 });

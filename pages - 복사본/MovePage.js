@@ -32,7 +32,7 @@ export default function MovePage() {
         justifyContent: 'center',
     },
     Text:{
-        fontSize: 40,
+        fontSize: 27,
         fontWeight: 'bold',
         textAlign: 'center',
         marginBottom: 10
